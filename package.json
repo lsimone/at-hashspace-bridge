@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "author": "ariatemplates <contact@ariatemplates.com> (http://github.com/ariatemplates)",
+  "name": "bridge",
+  "description": "Aria Templates-Hashspace bridge",
+  "version": "0.0.0-SNAPSHOT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ariatemplates/at-hashspace-bridge.git"
+  },
+  "devDependencies": {
+    "ariatemplates" : "1.5.2",
+    "hashspace" : "0.0.2",
+    "noder-js" : "1.3.0",
+    "grunt": "0.4.4",
+    "express": "3.0.6"
+  },
+  "scripts": {
+    "start": "grunt",
+    "test": "grunt"
+  }
+}

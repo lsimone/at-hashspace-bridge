@@ -1,0 +1,33 @@
+var klass = require("hsp/klass");
+var bridge = require("bridge/hsp/bridge.hsp").bridge;
+var widgetbridge = require("bridge/hsp/widgetbridge.hsp").widgetbridge;
+var PageCtrl = klass({
+    attributes:{
+        "moduleCtrl":{type:"object", defaultValue:{}, binding:"2-way"},
+        "data":{type:"object", defaultValue:{}, binding:"2-way"}
+    }
+});
+
+# export template page using c:PageCtrl
+    <div class="hsptpl">
+         Input: <input type="text" value="{c.data.value}"/><br/>
+        {c.data.value}
+
+        <br/><br/>
+
+        //Bridge to AT template
+        <#bridge classpath="templates.aria.Page2" moduleCtrl="{c.moduleCtrl}"/>
+
+        //Bridge to AT widgets
+        <#widgetbridge wlib="aria.widgets.AriaLib" name="TextField" config="{{label : "@aria:TextField", bind : {"value" : {inside : c.data, to : 'value'}}}}"/>
+        {c.data.value}
+        <hr/>
+        <#widgetbridge wlib="aria.widgets.AriaLib" name="DatePicker" config="{{label : "@aria:DatePicker", bind : {"value" : {inside : c.data, to : 'dateValue'}}}}"/>
+        {c.data.dateValue}
+        <hr/>
+        @touch:DoubleSlider
+        <#widgetbridge wlib="aria.touch.widgets.TouchWidgetLib" name="DoubleSlider" config="{{width : 400, bind : {"value" : {inside : c.data, to : 'sliderValue'}}}}"/>
+        {c.data.sliderValue}
+    </div>
+# /template
+

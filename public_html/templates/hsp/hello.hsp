@@ -1,0 +1,5 @@
+# export template hello()
+    <div class="hsptpl">
+        <b>Blue boxes are generated with HashSpace template engine!!!</b>
+    </div>
+# /template

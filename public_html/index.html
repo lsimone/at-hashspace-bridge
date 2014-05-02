@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="main.css" type="text/css" rel="stylesheet"/>
+    <!-- To serve non-minified files, it's also needed to change gruntfile's path to /aria -->
+    <!-- script type="text/javascript" src="./aria/bootstrap.js" /script -->
+    <!-- script type="text/javascript" src="./aria/css/atskin.js" /script -->
+    <script type="text/javascript" src="./aria/ariatemplates-1.5.2.js"></script>
+    <script type="text/javascript" src="./aria/css/atskin-1.5.2.js"></script>
+    <script type="text/javascript" src="./noder/noder.min.js">
+    {
+        packaging : {
+          baseUrl : "/",
+          requestConfig: {
+            sync: true
+          }
+        }
+    }
+    </script>
+  </head>
+  <body>
+    <div id="outputHSP"></div>
+    <div id="outputAT"></div>
+        <script type="text/javascript">
+
+          aria.core.DownloadMgr.updateRootMap({
+              templates : {
+                  "*" : "/"
+              },
+              bridge : {
+                  "*" : "/"
+              }
+          });
+
+          var hello = noder.require("templates/hsp/hello.hsp").hello;
+          hello().render("outputHSP");
+
+          Aria.load({
+            classes: ["aria.widgets.form.TextField", "aria.widgets.form.DatePicker","aria.touch.widgets.DoubleSlider"], //Hack to fix the flickering
+            oncomplete : function() {
+              Aria.loadTemplate({
+                classpath: "templates.aria.Page",
+                div: "outputAT",
+                moduleCtrl : {
+                    classpath : "templates.aria.MainCtrl"
+                }
+              });
+            }
+          });
+
+        </script>
+    </div>
+  </body>
+</html>
