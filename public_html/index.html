@@ -11,7 +11,6 @@
     <script type="text/javascript" src="./noder/noder.min.js">
     {
         packaging : {
-          baseUrl : "/",
           requestConfig: {
             sync: true
           }
@@ -22,21 +21,12 @@
   <body>
     <div id="outputHSP"></div>
     <div id="outputAT"></div>
-        <script type="text/javascript">
 
-          aria.core.DownloadMgr.updateRootMap({
-              templates : {
-                  "*" : "/"
-              },
-              bridge : {
-                  "*" : "/"
-              }
-          });
+    <script type="text/javascript">
+        var hello = noder.require("templates/hsp/hello.hsp").hello;
+        hello().render("outputHSP");
 
-          var hello = noder.require("templates/hsp/hello.hsp").hello;
-          hello().render("outputHSP");
-
-          Aria.load({
+        Aria.load({
             classes: ["aria.widgets.form.TextField", "aria.widgets.form.DatePicker","aria.touch.widgets.DoubleSlider"], //Hack to fix the flickering
             oncomplete : function() {
               Aria.loadTemplate({
@@ -47,9 +37,7 @@
                 }
               });
             }
-          });
-
-        </script>
-    </div>
+        });
+    </script>
   </body>
 </html>
