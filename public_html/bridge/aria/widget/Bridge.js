@@ -5,8 +5,7 @@ Aria.classDefinition({
     $classpath : "bridge.aria.widget.Bridge",
     $extends : "aria.widgetLibs.BaseWidget",
     $dependencies : ["bridge.aria.widget.BridgeCfg", "aria.templates.TemplateTrait", "aria.utils.Html",
-            "aria.templates.TemplateCtxt", "aria.utils.Dom", "aria.templates.ModuleCtrlFactory",
-            "aria.core.environment.Customizations"],
+             "aria.utils.Dom"],
     $events : {
         "ElementReady" : {
             description : "Raised when the template content is fully displayed."
