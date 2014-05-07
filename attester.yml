@@ -1,0 +1,20 @@
+resources:
+ '/aria':
+  - 'node_modules/ariatemplates/src/aria'
+ '/hsp':
+  - 'node_modules/hashspace/hsp'
+ '/noder':
+  - 'node_modules/noder-js/dist/browser'
+ '/test':
+  - 'test'
+ '/':
+  - 'public_html'
+tests:
+ aria-templates:
+  bootstrap: '/aria/bootstrap.js'
+  extraScripts:
+    - /aria/css/atskin.js
+    - /noder/noder.min.js
+  classpaths:
+   includes:
+    - test.hsbridge.MainTestSuite
