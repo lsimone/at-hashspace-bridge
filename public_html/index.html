@@ -6,24 +6,32 @@
     <!-- To serve non-minified files, it's also needed to change gruntfile's path to /aria -->
     <!-- script type="text/javascript" src="./aria/bootstrap.js" /script -->
     <!-- script type="text/javascript" src="./aria/css/atskin.js" /script -->
-    <script type="text/javascript" src="./aria/ariatemplates-1.5.2.js"></script>
-    <script type="text/javascript" src="./aria/css/atskin-1.5.2.js"></script>
-    <script type="text/javascript" src="./noder/noder.min.js">
+    <script type="text/javascript" src="./aria/ariatemplates-1.6.0-beta.3.js">
     {
         packaging : {
+          preprocessors: [{
+            pattern: /\.hsp$/,
+            module: "hsp/compiler/compile"
+          }/*, {
+            pattern: /\.js$/,
+            module: "hsp/transpiler/transpile"
+          }*/],
           requestConfig: {
-            sync: true
+            sync: false
           }
         }
     }
     </script>
+    <script type="text/javascript" src="./aria/css/atskin-1.6.0-beta.3.js"></script>
+    <script type="text/javascript" src="./hashspace/hashspace-noder.min.js"></script>
+    <script type="text/javascript" src="./hashspace/hashspace-noder-compiler.min.js"></script>
   </head>
   <body>
     <div id="outputHSP"></div>
     <div id="outputAT"></div>
 
-    <script type="text/javascript">
-        var hello = noder.require("templates/hsp/hello.hsp").hello;
+    <script type="noder">
+        var hello = require("templates/hsp/hello.hsp").hello;
         hello().render("outputHSP");
 
         Aria.load({
@@ -41,3 +49,4 @@
     </script>
   </body>
 </html>
+

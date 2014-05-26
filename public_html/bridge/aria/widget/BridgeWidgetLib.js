@@ -1,21 +1,25 @@
-Aria.classDefinition({
+
+var Aria = require("ariatemplates/Aria");
+var ariaWidgetLibsWidgetLib = require("ariatemplates/widgetLibs/WidgetLib");
+var ariaUtilsJson = require("ariatemplates/utils/Json");
+module.exports = Aria.classDefinition({
     $classpath : "bridge.aria.widget.BridgeWidgetLib",
-    $extends : "aria.widgetLibs.WidgetLib",
+    $extends : ariaWidgetLibsWidgetLib,
     $singleton : true,
     $constructor : function() {
         //Bridge hackish sync
-        var json = noder.require("hsp/json");
-        aria.utils.Json.constructor.prototype.setValue2 = aria.utils.Json.constructor.prototype.setValue;
-        aria.utils.Json.constructor.prototype.setValue = function (a,b,c,d,e) {
+        var json = require("hsp/json");
+        ariaUtilsJson.constructor.prototype.setValue2 = ariaUtilsJson.constructor.prototype.setValue;
+        ariaUtilsJson.constructor.prototype.setValue = function (a,b,c,d,e) {
             var initialValue = a[b];
             json.$set2(a,b,c);
             a[b] = initialValue;
-            return aria.utils.Json.setValue2(a,b,c,d,e);
+            return ariaUtilsJson.setValue2(a,b,c,d,e);
         }
         json.$set2 = json.$set;
         json.$set = function (a,b,c) {
             var initialValue = a[b];
-            aria.utils.Json.setValue2(a,b,c);
+            ariaUtilsJson.setValue2(a,b,c);
             a[b] = initialValue;
             return json.$set2(a,b,c);
         }

@@ -5,7 +5,8 @@
     'hsp' : 'bridge.aria.widget.BridgeWidgetLib',
     'touch' : 'aria.touch.widgets.TouchWidgetLib'
   },
-  $templates : ["bridge.aria.Empty"]
+  $templates : ["bridge.aria.Empty"],
+  $hasScript: true
 }}
 
 {macro main()}
@@ -32,7 +33,7 @@
     {@hsp:Bridge {
       id: "hspid",
       type:"div",
-      hsp: noder.require("templates/hsp/page.hsp").page,
+      hsp: getHsp(),
       moduleCtrl: this.moduleCtrl
     } /}
   </div>

@@ -23,7 +23,7 @@ module.exports = function (grunt) {
       base: path.join(__dirname, "/public_html"),
       staticFolders: {
         "/aria":  path.join(__dirname, "/node_modules/ariatemplates/build/target/production/aria"),
-        "/hsp":   path.join(__dirname, "/node_modules/hashspace/hsp"),
+        "/hashspace":   path.join(__dirname, "/node_modules/hashspace/dist"),
         "/noder": path.join(__dirname, "/node_modules/noder-js/dist/browser")
       }
     }
