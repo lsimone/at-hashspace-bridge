@@ -19,15 +19,52 @@ var PageCtrl = klass({
         <#bridge classpath="templates.aria.Page2" moduleCtrl="{c.moduleCtrl}"/>
 
         //Bridge to AT widgets
-        <#widgetbridge wlib="aria.widgets.AriaLib" name="TextField" config="{{label : "@aria:TextField", bind : {"value" : {inside : c.data, to : 'value'}}}}"/>
+        <#widgetbridge wlib="aria.widgets.AriaLib" name="TextField" config="{getTextFieldConfig(c)}"/>
         {c.data.value}
         <hr/>
-        <#widgetbridge wlib="aria.widgets.AriaLib" name="DatePicker" config="{{label : "@aria:DatePicker", bind : {"value" : {inside : c.data, to : 'dateValue'}}}}"/>
+        <#widgetbridge wlib="aria.widgets.AriaLib" name="DatePicker" config="{getDatePickerConfig(c)}"/>
         {c.data.dateValue}
         <hr/>
         @touch:DoubleSlider
-        <#widgetbridge wlib="aria.touch.widgets.TouchWidgetLib" name="DoubleSlider" config="{{width : 400, bind : {"value" : {inside : c.data, to : 'sliderValue'}}}}"/>
+        <#widgetbridge wlib="aria.touch.widgets.TouchWidgetLib" name="DoubleSlider" config="{getDoubleSliderConfig(c)}"/>
         {c.data.sliderValue}
     </div>
 # /template
+
+var getTextFieldConfig = function(c) {
+    return {
+        label : '@aria:TextField',
+        bind : {
+            'value' : {
+                inside : c.data,
+                to : 'value'
+             }
+        }
+    };
+};
+
+var getDatePickerConfig = function(c) {
+    return {
+        label : '@aria:DatePicker',
+        bind : {
+            'value' : {
+                inside : c.data,
+                to : 'dateValue'
+             }
+        }
+    };
+};
+
+var getDoubleSliderConfig = function(c) {
+    return {
+        width : 400,
+        bind : {
+            'value' : {
+                inside : c.data,
+                to : 'sliderValue'
+             }
+        }
+    };
+};
+
 

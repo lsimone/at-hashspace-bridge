@@ -34,13 +34,21 @@ module.exports = function(grunt) {
         }
 
         // Serve compiled templates through the view engine
-        app.engine(ext, renderer.renderFile);
+        /*
+        app.engine(ext, function() {
+            console.log('Compilation of ' + arguments['0']);
+            console.time('compile');
+            renderer.renderFile.apply(null, arguments);
+            console.timeEnd('compile');
+        });
+        */
 
         app.use(express.bodyParser());
 
+        /*
         app.use(function (req, res, next) {
             // extname return a ".ext", configuration asks only for "ext"
-            if (path.extname(req.url) === "." + ext) {
+             if (path.extname(req.url) === "." + ext) {
                 // The first character is '/', remove it to have relative paths
                 res.render(req.url.substring(1));
                 res.set("Content-Type","application/javascript");
@@ -62,6 +70,7 @@ module.exports = function(grunt) {
                 next();
             }
         });
+        */
 
         // Serve static files from certain folders as in config
         var staticFolders = grunt.config('hspserver.staticFolders');
