@@ -33,8 +33,10 @@
     {@hsp:Bridge {
       id: "hspid",
       type:"div",
-      hsp: getHsp(),
-      moduleCtrl: this.moduleCtrl
+      hsp: {
+          src: getHsp(),
+          args:[this.moduleCtrl]
+      }
     } /}
   </div>
 {/macro}

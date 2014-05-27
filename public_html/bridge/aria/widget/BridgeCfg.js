@@ -38,8 +38,8 @@ Aria.beanDefinitions({
                     $mandatory : false
                 },
                 "hsp" : {
-                    $type : "json:ObjectRef",
-                    $description : "Hashspace template.",
+                    $type : "HspCfg",
+                    $description : "Hashspace configuration.",
                     $mandatory : true
                 },
                 "type" : {
@@ -52,10 +52,23 @@ Aria.beanDefinitions({
                     $description : "JSON object to be made accessible in the sub-template as this.data. By default, use the parent template data, unless moduleCtrl is specified, in which case the data model of that module controller is used.",
                     $mandatory : false
                 },
-                "moduleCtrl" : {
-                    $type : "html:ModuleCtrl",
-                    $description : "Module controller to be used with the sub-template. By default, use the parent template module controller, unless data is specified and is the data model of one of the sub-modules of the parent template module controller, in which case that sub-module is used.",
-                    $mandatory : false
+                "baseTabIndex" : {
+                    $type : "json:Integer",
+                    $description : "The base tab index that will be added to all tab indexes in the template",
+                    $default : 0
+                }
+            }
+        },
+        "HspCfg" : {
+            $type : "json:Object",
+            $description : "Hsp option structure",
+            // open configuration
+            $restricted : false,
+            $properties : {
+                "src" : {
+                    $type : "json:ObjectRef",
+                    $description : "Hashspace template.",
+                    $mandatory : true
                 },
                 "args" : {
                     $type : "json:Array",
@@ -65,11 +78,6 @@ Aria.beanDefinitions({
                         $description : "Any parameter to be passed to the main macro in the sub-template."
                     },
                     $default : []
-                },
-                "baseTabIndex" : {
-                    $type : "json:Integer",
-                    $description : "The base tab index that will be added to all tab indexes in the template",
-                    $default : 0
                 }
             }
         }
