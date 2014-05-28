@@ -10,18 +10,18 @@ module.exports = Aria.classDefinition({
         //Bridge hackish sync
         var json = require("hsp/json");
         ariaUtilsJson.constructor.prototype.setValue2 = ariaUtilsJson.constructor.prototype.setValue;
-        ariaUtilsJson.constructor.prototype.setValue = function (a,b,c,d,e) {
-            var initialValue = a[b];
-            json.$set2(a,b,c);
-            a[b] = initialValue;
-            return ariaUtilsJson.setValue2(a,b,c,d,e);
+        ariaUtilsJson.constructor.prototype.setValue = function (container, property, val, listenerToExclude, throwError) {
+            var initialValue = container[property];
+            json.$set2(container,property,val);
+            container[property] = initialValue;
+            return ariaUtilsJson.setValue2(container,property,val,listenerToExclude,throwError);
         }
         json.$set2 = json.$set;
-        json.$set = function (a,b,c) {
-            var initialValue = a[b];
-            ariaUtilsJson.setValue2(a,b,c);
-            a[b] = initialValue;
-            return json.$set2(a,b,c);
+        json.$set = function (object, property, value) {
+            var initialValue = object[property];
+            ariaUtilsJson.setValue2(object, property, value);
+            object[property] = initialValue;
+            return json.$set2(object, property, value);
         }
         json.set = json.$set;
     },
