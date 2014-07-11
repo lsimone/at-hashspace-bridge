@@ -3,39 +3,54 @@ var idCounter = 0;
 var tplCtxt = new aria.templates.TemplateCtxt();
 exports.tplCtxt = tplCtxt;
 require("bridge/aria/Empty.tpl");
+var atlasCtrl = require("bridge/hsp/atlas.hsp").bridge;
 tplCtxt.initTemplate({classpath: "bridge.aria.Empty"}); // check if it can be done in a better
                                                                                 // way
 tplCtxt.getMarkup();
 tplCtxt.linkToPreviousMarkup(document.createElement("div"));
 
 var WidgetBridgeCtrl = klass({
-    attributes:{
-        "content":{type:"template", defaultContent:true},
-        "wlib":{type:"string", defaultValue:"aria.widgets.AriaLib", binding:"1-way"},
-        "name":{type:"string", defaultValue:"", binding:"1-way"},
-        "id":{type:"string", binding:"1-way"},
-        "config":{type:"object", defaultValue:{}, binding:"1-way"}
+    elements:{
+        "atlas": { type: "component", controller: atlasCtrl }
     },
-    $init: function (parent) {
+    attributes:{
+        "id":{type:"string", binding:"1-way"}
+    },
+    $init: function () {
         if (this.id == "") {
             this.id = "atwidget_" + idCounter++;
         }
     },
     $afterRender: function() {
-        this.loadSection();
+        debugger;
+
+        var dependencies = [];
+        for(var i=0, l=this.content.length; i<l; i++){
+            var wgt = this.content[i];
+            var dep = wgt.getWidgetDependencies();
+            dependencies = dependencies.concat(dep);
+        }
+
+        Aria.load({
+            classes : dependencies,
+            oncomplete: {
+                fn: this._afterLoad,
+                scope: this
+            }
+        });
+
+
+// this.loadSection();
     },
 
     _afterLoad: function (lib) {
+
         var out = new aria.templates.MarkupWriter(tplCtxt);
-        // TODO: manage the content in case of containers (like Div widget)
-// if(this.content && false){
-// var widgInst = lib.processWidgetMarkupBegin(this.name, out, this.config);
-//
-// widgInst.writeMarkupEnd(out);
-// }
-// else{
-            lib.processWidgetMarkup(this.name, out, this.config);
-// }
+        for(var i=0, l=this.content.length; i<l; i++){
+            var wgt = this.content[i];
+            wgt.processWidgetMarkup(out);
+        }
+
         this.section = out.getSection();
         tplCtxt._mainSection.addSubSection(this.section);
         var domElt = aria.utils.Dom.replaceHTML(this.id, this.section.html);
@@ -57,6 +72,7 @@ var WidgetBridgeCtrl = klass({
     },
 
     loadSection: function () {
+         // $refresh?
         var lib = Aria.getClassRef(this.wlib);
         var dependencies = lib.getWidgetDependencies(this.name);
         Aria.load({
@@ -74,16 +90,6 @@ var WidgetBridgeCtrl = klass({
         this.loadSection();
     },
 
-    getWidgetDependencies: function () {
-        var lib = Aria.getClassRef(this.wlib);
-        return lib.getWidgetDependencies(this.name);
-    },
-
-    processWidgetMarkup: function(out){
-        var lib = Aria.getClassRef(this.wlib);
-        lib.processWidgetMarkup(this.name, out, this.config);
-    },
-
     onConfigChange: function() {
         this.reloadSection();
     },
@@ -98,9 +104,7 @@ var WidgetBridgeCtrl = klass({
 
 });
 
-exports.bridge = WidgetBridgeCtrl;
-
-# export template atlas using c:WidgetBridgeCtrl
+# export template atlasSection using c:WidgetBridgeCtrl
     <div id="{c.id}">
     </div>
 # /template

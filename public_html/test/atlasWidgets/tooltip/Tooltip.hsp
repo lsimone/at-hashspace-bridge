@@ -1,0 +1,90 @@
+var klass = require("hsp/klass");
+var bridge = require("bridge/hsp/atlas.hsp");
+var bridgeSection = require("bridge/hsp/atlasSection.hsp");
+var tooltip = require("ariatemplates/widgets/container/Tooltip");
+var atlas = bridge.atlas;
+var atlasSection = bridgeSection.atlasSection;
+var tplCtxt = bridge.tplCtxt;
+
+var PageCtrl = klass({
+    attributes:{
+        "moduleCtrl":{type:"object", defaultValue:{}, binding:"2-way"},
+        "data":{type:"object", defaultValue:{}, binding:"2-way"},
+        "id":{type:"object", binding:"2-way"}
+    }
+});
+
+# export template page using c:PageCtrl
+    <div class="hsptpl">
+    HASHSPACE OUTER<br/>
+
+        <#atlasSection >
+            // Bridge to AT widgets
+            <@atlas wlib="aria.widgets.AriaLib" name="Text" config="{getConfigText(c)}"/>
+            // Bridge to AT widgets
+            <@atlas wlib="aria.widgets.AriaLib" name="Tooltip" config="{getConfigTooltip(c)}"/>
+        <@atlas wlib="aria.widgets.AriaLib" name="IconButton" config="{getConfig(c)}"/>
+        </#atlasSection >
+
+
+
+//        // Bridge to AT widgets
+//        <#atlas wlib="aria.widgets.AriaLib" name="Text" config="{getConfigText(c)}"/>
+//        // Bridge to AT widgets
+//        <#atlas wlib="aria.widgets.AriaLib" name="Tooltip" config="{getConfigTooltip(c)}"/>
+
+//        // Bridge to AT widgets
+//        <#atlas wlib="aria.widgets.AriaLib" name="Div" config="{getConfigDiv(c)}">
+//        <h1>test</h1>
+//        </#atlas>
+
+         <br />
+         <input id="justToFocusOut"/>
+
+    </div>
+# /template
+
+var getConfig = function(c) {
+    return {
+            id:"myId",
+            sourceImage:{ path:aria.core.DownloadMgr.resolveURL("test/atlasWidgets/iconbutton/icon-check.png"), width:42},
+            label:"mybutton",
+            onclick: function(){
+                Json.setValue(c.data, "value", !c.data.value);
+            }
+        };
+};
+
+var getConfigTooltip = function(c) {
+    return {
+        id:"simpleTooltip",
+        macro : {
+            scope: macroCtxt,
+            name: "myMacro"
+        },
+        width: 200
+    };
+};
+
+var getConfigText = function(c) {
+    return {
+        id:"myId",
+        text: "Hover this text",
+        width : 150,
+        tooltipId: "simpleTooltip"
+    };
+};
+
+var getConfigDiv = function(c) {
+    return {
+        sclass : "basic",
+        width : 500,
+        height : 200
+    };
+};
+
+var macroCtxt = {
+    macro_myMacro: function(){
+        tplCtxt._out.write("<h1 id=\"testTooltipId\">TEST TOOLTIP</h1>")
+    }
+};

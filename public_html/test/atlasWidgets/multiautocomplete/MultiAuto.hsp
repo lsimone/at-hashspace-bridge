@@ -12,7 +12,7 @@ var PageCtrl = klass({
     <div class="hsptpl">
     HASHSPACE OUTER<br/>
 
-        //Bridge to AT widgets
+        // Bridge to AT widgets
         <#atlas wlib="aria.widgets.AriaLib" name="MultiAutoComplete" config="{getTextFieldConfig(c)}"/>
 
     </div>
@@ -97,7 +97,7 @@ var getTextFieldConfig = function(c) {
                     code : 'SK'
                 }]);
 
-var that=this;
+        var that=this;
         var getAirLinesHandler = function () {
             return that._airLineHandler;
         }
